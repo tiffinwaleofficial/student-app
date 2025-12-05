@@ -3,6 +3,20 @@ const { getDefaultConfig } = require('expo/metro-config');
 
 const config = getDefaultConfig(__dirname);
 
+// Configure for Replit environment - allow all hosts for iframe proxy
+config.server = {
+  ...config.server,
+  enhanceMiddleware: (middleware) => {
+    return (req, res, next) => {
+      // Set headers to allow iframe embedding and proxy
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+      return middleware(req, res, next);
+    };
+  },
+};
+
 // Add support for additional file extensions if needed
 config.resolver.sourceExts.push('cjs');
 

@@ -6,8 +6,9 @@
   "private": true,
   "packageManager": "bun@1.0.0",
   "scripts": {
-    "dev": "EXPO_NO_TELEMETRY=1 EXPO_NO_DOCTOR=1 bun exec expo start --clear",
-    "start": "EXPO_NO_DOCTOR=1 bun exec expo start --clear",
+    "dev": "EXPO_NO_TELEMETRY=1 EXPO_NO_DOCTOR=1 bun exec expo start --web --port 5000 --host 0.0.0.0 --clear",
+    "start": "EXPO_NO_TELEMETRY=1 EXPO_NO_DOCTOR=1 bun exec expo start --clear",
+    "web": "EXPO_NO_TELEMETRY=1 EXPO_NO_DOCTOR=1 bun exec expo start --web --port 5000 --host 0.0.0.0 --clear",
     "build:web": "bun exec expo export --platform web",
     "lint": "bun exec expo lint",
     "build:gcloud": "bun run export:web && rm -rf web-build && mkdir -p web-build && cp -r web-build-temp/* web-build/ && cp custom-fonts.css web-build/ && rm -rf web-build-temp && node add-styles.js",

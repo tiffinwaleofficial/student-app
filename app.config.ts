@@ -21,9 +21,6 @@ export default {
     scheme: "tiffinwale",
     userInterfaceStyle: "automatic",
     newArchEnabled: true,
-    ios: {
-      supportsTablet: true
-    },
     web: {
       bundler: "metro",
       output: "single",
@@ -55,7 +52,6 @@ export default {
       // Enable Hermes for better performance and code splitting
       jsEngine: "hermes"
     },
-    // Enable Hermes for iOS as well
     ios: {
       supportsTablet: true,
       jsEngine: "hermes"
