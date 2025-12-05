@@ -1,72 +1,56 @@
 /**
  * API Configuration Utility
- * Handles different base URLs for different platforms with comprehensive Android support
+ * Centralized configuration for backend API URLs
+ * 
+ * To switch between remote and local backend:
+ * - Set USE_LOCAL_BACKEND to true for local development
+ * - Set USE_LOCAL_BACKEND to false for remote/production backend
  */
 
 import { Platform } from 'react-native';
 
-// Define multiple potential backend URLs for Android emulator
-const ANDROID_BACKEND_OPTIONS = [
-  'http://10.0.2.2:3001',     // Standard Android emulator host mapping
-  'http://192.168.1.100:3001', // Replace with your actual laptop IP
-  'http://192.168.0.100:3001', // Alternative common IP range
-  'http://127.0.0.1:3001',     // Localhost fallback
-];
+// ============================================
+// BACKEND CONFIGURATION TOGGLE
+// ============================================
+// Set to true to use local backend, false for remote
+const USE_LOCAL_BACKEND = false;
 
-// Function to get your laptop's local IP (you'll need to replace this)
-const getLocalIpAddress = (): string => {
-  // Your laptop's actual IP address from ipconfig
-  return '10.130.40.1'; // Your WiFi adapter IP address
-};
+// Backend URLs
+const REMOTE_BACKEND_URL = 'https://api.tiffin-wale.com';
+const LOCAL_BACKEND_URL = 'http://localhost:3001';
 
+// ============================================
+// API URL RESOLUTION
+// ============================================
 export const getApiBaseUrl = (): string => {
-  // Platform-specific configuration
-  if (Platform.OS === 'android') {
-    // Android uses production backend
-    const prodUrl = 'https://api.tiffin-wale.com';
-    if (__DEV__) console.log('📱 Android using production backend:', prodUrl);
-    return prodUrl;
+  // Check for environment variable override first
+  const envUrl = process.env.EXPO_PUBLIC_API_BASE_URL;
+  if (envUrl && envUrl.trim() !== '') {
+    if (__DEV__) console.log('🌐 Using environment API URL:', envUrl);
+    return envUrl;
   }
-  
-  if (Platform.OS === 'ios') {
-    // iOS uses production backend for mobile
-    const prodUrl = 'https://api.tiffin-wale.com';
-    if (__DEV__) console.log('📱 iOS using production backend:', prodUrl);
-    return prodUrl;
+
+  // Use configuration toggle
+  if (USE_LOCAL_BACKEND) {
+    // Platform-specific local backend URLs
+    if (Platform.OS === 'android') {
+      // Android emulator uses 10.0.2.2 to access host machine
+      const androidUrl = 'http://10.0.2.2:3001';
+      if (__DEV__) console.log('📱 Android using local backend:', androidUrl);
+      return androidUrl;
+    }
+    if (__DEV__) console.log('🏠 Using local backend:', LOCAL_BACKEND_URL);
+    return LOCAL_BACKEND_URL;
   }
-  
-  // Web platform uses local backend for development
-  if (Platform.OS === 'web') {
-    const localUrl = 'http://127.0.0.1:3001';
-    if (__DEV__) console.log('🌐 Web using local backend:', localUrl);
-    return localUrl;
-  }
-  
-  // Default fallback to production
-  const defaultUrl = 'https://api.tiffin-wale.com';
-  if (__DEV__) console.log('🌐 Using production backend:', defaultUrl);
-  return defaultUrl;
+
+  // Default to remote backend
+  if (__DEV__) console.log('🌍 Using remote backend:', REMOTE_BACKEND_URL);
+  return REMOTE_BACKEND_URL;
 };
 
-// Function to test connectivity and provide alternative URLs
-export const getAlternativeUrls = (): string[] => {
-  if (Platform.OS === 'android') {
-    const localIp = getLocalIpAddress();
-    return [
-      'http://10.0.2.2:3001',
-      `http://${localIp}:3001`,
-      'http://192.168.1.100:3001', // Common IP ranges
-      'http://192.168.0.100:3001',
-      'http://192.168.1.101:3001',
-      'http://127.0.0.1:3001',
-    ];
-  }
-  return [API_BASE_URL];
-};
-
-export const API_BASE_URL = getApiBaseUrl();
-
-// WebSocket URL (same as API but with ws protocol)
+// ============================================
+// WEBSOCKET URL RESOLUTION
+// ============================================
 export const getWebSocketUrl = (): string => {
   const apiUrl = getApiBaseUrl();
   return apiUrl.replace('http://', 'ws://').replace('https://', 'wss://');
@@ -74,36 +58,42 @@ export const getWebSocketUrl = (): string => {
 
 export const getNativeWebSocketUrl = (): string => {
   const apiUrl = getApiBaseUrl();
-  // Native WebSocket runs on port 3002 (different from Socket.IO)
   const wsUrl = apiUrl.replace('http://', 'ws://').replace('https://', 'wss://');
   
-  // Replace port 3001 with 3002 for native WebSocket
+  // For local development, use port 3002 for native WebSocket
   if (wsUrl.includes(':3001')) {
     return wsUrl.replace(':3001', ':3002');
-  }
-  
-  // For production URLs, append the native WebSocket port
-  if (wsUrl.includes('api-tiffin-wale') && wsUrl.includes('vercel.app')) {
-    // For Vercel, we'll use the same URL but with a different path
-    return wsUrl + '/native-ws';
   }
   
   return wsUrl;
 };
 
+// ============================================
+// EXPORTED CONFIGURATION
+// ============================================
+export const API_BASE_URL = getApiBaseUrl();
+
 export const API_CONFIG = {
   BASE_URL: API_BASE_URL,
   WS_BASE_URL: getWebSocketUrl(),
-  NATIVE_WS_URL: getNativeWebSocketUrl(), // New native WebSocket URL
-  TIMEOUT: 10000,
+  NATIVE_WS_URL: getNativeWebSocketUrl(),
+  TIMEOUT: 15000,
   RETRY_ATTEMPTS: 3,
+  RETRY_DELAY: 1000,
 };
 
-// Enhanced logging for debugging (only in development)
+// ============================================
+// HELPER FUNCTIONS
+// ============================================
+export const isUsingLocalBackend = (): boolean => USE_LOCAL_BACKEND;
+export const isUsingRemoteBackend = (): boolean => !USE_LOCAL_BACKEND;
+
+// Log configuration on initialization (dev only)
 if (__DEV__) {
-  console.log('🌐 API Configuration:', {
+  console.log('🔧 API Configuration:', {
     baseUrl: API_BASE_URL,
     platform: Platform.OS,
+    isLocal: USE_LOCAL_BACKEND,
     wsUrl: API_CONFIG.WS_BASE_URL,
   });
 }

@@ -1,7 +1,7 @@
 import { Theme } from './types';
-import { lightColors, darkColors } from './colors';
-import { typography } from './typography';
-import { spacing } from './spacing';
+import { lightColors, darkColors, palette } from './colors';
+import { typography, fontStyles } from './typography';
+import { spacing, layout, shadows } from './spacing';
 import { borderRadius } from './borderRadius';
 
 export const lightTheme: Theme = {
@@ -25,3 +25,4 @@ export * from './colors';
 export * from './typography';
 export * from './spacing';
 export * from './borderRadius';
+export { palette, fontStyles, layout, shadows };

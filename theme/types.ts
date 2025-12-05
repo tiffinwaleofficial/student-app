@@ -1,6 +1,8 @@
 export interface ColorPalette {
-    // Primitives
     orange: string;
+    orangeLight: string;
+    orangeDark: string;
+    cream: string;
     white: string;
     black: string;
     grey: {
@@ -14,35 +16,65 @@ export interface ColorPalette {
         700: string;
         800: string;
         900: string;
+        950: string;
     };
     red: string;
+    redLight: string;
     green: string;
+    greenLight: string;
     blue: string;
     blueLight: string;
-    orangeLight: string;
+    yellow: string;
+    yellowLight: string;
+    purple: string;
+    purpleLight: string;
     transparent: string;
 }
 
 export interface ThemeColors {
     primary: string;
+    primaryLight: string;
+    primaryDark: string;
     background: string;
+    backgroundSecondary: string;
     card: string;
+    cardElevated: string;
     text: string;
     textSecondary: string;
     textTertiary: string;
+    textInverse: string;
     border: string;
+    borderLight: string;
+    divider: string;
     error: string;
+    errorLight: string;
     success: string;
+    successLight: string;
+    warning: string;
+    warningLight: string;
+    info: string;
+    infoLight: string;
     tint: string;
     tabIconDefault: string;
     tabIconSelected: string;
     modalOverlay: string;
     shadowColor: string;
-    primaryLight: string;
-    info: string;
-    infoLight: string;
     warningText: string;
     white: string;
+    skeleton: string;
+    skeletonHighlight: string;
+    inputBackground: string;
+    inputBorder: string;
+    inputPlaceholder: string;
+    buttonDisabled: string;
+    buttonDisabledText: string;
+    ripple: string;
+    overlay: string;
+    statusPreparing: string;
+    statusReady: string;
+    statusDelivered: string;
+    statusCancelled: string;
+    statusScheduled: string;
 }
 
 export interface Typography {
