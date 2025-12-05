@@ -9,6 +9,8 @@ import {
   Alert,
   Switch,
   ActivityIndicator,
+  Modal,
+  RefreshControl,
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { useRouter } from 'expo-router';
@@ -27,26 +29,52 @@ import {
   ChevronRight,
   Edit,
   TestTube,
+  Palette,
+  X,
 } from 'lucide-react-native';
 import { useAuth } from '@/auth/AuthProvider';
 import { useSubscriptionStore } from '@/store/subscriptionStore';
 import { showNotification } from '@/utils/notificationService';
 import { profileImageService } from '@/services/profileImageService';
-// Remove BackButton import since we're in tabs now
 import { ProfileAvatar } from '@/components/ProfileAvatar';
 import { LanguageSelector } from '@/components/LanguageSelector';
 import { useTranslation } from '@/hooks/useTranslation';
 import NotificationTestPanel from '@/components/NotificationTestPanel';
+import ThemeSettings from '@/components/settings/ThemeSettings';
+import { useThemeStore } from '@/store/themeStore';
 
 export default function ProfileScreen() {
   const router = useRouter();
   const { user, logout, isLoading } = useAuth();
   const { currentSubscription, fetchCurrentSubscription } = useSubscriptionStore();
   const { t } = useTranslation('profile');
+  const { mode: themeMode, resolvedMode } = useThemeStore();
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [isUploadingImage, setIsUploadingImage] = useState(false);
   const [showTestPanel, setShowTestPanel] = useState(false);
+  const [showThemeSettings, setShowThemeSettings] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const handleRefresh = async () => {
+    setIsRefreshing(true);
+    try {
+      await fetchCurrentSubscription(true);
+    } catch (error) {
+      if (__DEV__) console.error('Failed to refresh profile data:', error);
+    } finally {
+      setIsRefreshing(false);
+    }
+  };
+
+  const getThemeModeLabel = () => {
+    switch (themeMode) {
+      case 'light': return 'Light';
+      case 'dark': return 'Dark';
+      case 'system': return 'System';
+      default: return 'Light';
+    }
+  };
 
   if (__DEV__) console.log('🔍 MyProfileScreen: Component rendered');
   if (__DEV__) console.log('👤 MyProfileScreen: User state:', user);
@@ -164,6 +192,14 @@ export default function ProfileScreen() {
         style={styles.scrollView} 
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefreshing}
+            onRefresh={handleRefresh}
+            tintColor="#FF9B42"
+            colors={['#FF9B42']}
+          />
+        }
       >
         <View style={styles.content}>
           {/* Profile Card */}
@@ -327,6 +363,19 @@ export default function ProfileScreen() {
               <ChevronRight size={20} color="#CCCCCC" />
             </TouchableOpacity>
 
+            <TouchableOpacity style={styles.menuItem} onPress={() => setShowThemeSettings(true)}>
+              <View style={styles.menuItemLeft}>
+                <View style={[styles.menuIcon, { backgroundColor: '#FFF3E0' }]}>
+                  <Palette size={20} color="#FF9B42" />
+                </View>
+                <View style={styles.menuItemTextContainer}>
+                  <Text style={styles.menuItemText}>Appearance</Text>
+                  <Text style={styles.menuItemSubtext}>{getThemeModeLabel()} Mode</Text>
+                </View>
+              </View>
+              <ChevronRight size={20} color="#CCCCCC" />
+            </TouchableOpacity>
+
             <LanguageSelector onLanguageChange={(lang) => {
               console.log('🌐 Language changed to:', lang);
               // Optionally refresh user profile or other data after language change
@@ -407,6 +456,37 @@ export default function ProfileScreen() {
         visible={showTestPanel} 
         onClose={() => setShowTestPanel(false)} 
       />
+      
+      {/* Theme Settings Modal */}
+      <Modal
+        visible={showThemeSettings}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => setShowThemeSettings(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={[
+            styles.modalContent,
+            { backgroundColor: resolvedMode === 'dark' ? '#1A1A1A' : '#FFFAF0' }
+          ]}>
+            <View style={styles.modalHeader}>
+              <Text style={[
+                styles.modalTitle,
+                { color: resolvedMode === 'dark' ? '#FFFFFF' : '#333333' }
+              ]}>Appearance Settings</Text>
+              <TouchableOpacity
+                onPress={() => setShowThemeSettings(false)}
+                style={styles.modalCloseButton}
+              >
+                <X size={24} color={resolvedMode === 'dark' ? '#FFFFFF' : '#333333'} />
+              </TouchableOpacity>
+            </View>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <ThemeSettings />
+            </ScrollView>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -641,6 +721,41 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#333333',
     fontWeight: '500',
+  },
+  menuItemTextContainer: {
+    flex: 1,
+  },
+  menuItemSubtext: {
+    fontSize: 12,
+    color: '#999999',
+    marginTop: 2,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'flex-end',
+  },
+  modalContent: {
+    maxHeight: '80%',
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    paddingBottom: 40,
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 20,
+    paddingBottom: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(0,0,0,0.1)',
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: '600',
+  },
+  modalCloseButton: {
+    padding: 4,
   },
   supportSection: {
     backgroundColor: '#FFFFFF',
