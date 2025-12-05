@@ -20,6 +20,9 @@ import { useNotificationPreferencesStore } from '@/store/notificationPreferences
 import KeyboardAvoidingWrapper from '@/components/KeyboardAvoidingWrapper';
 import LanguageService from '@/utils/languageService';
 import { useNavigationTracking } from '@/hooks/useNavigationTracking';
+import { ErrorBoundary } from '@/components/ui';
+import { AppThemeProvider } from '@/context/ThemeContext';
+import { useThemeStore } from '@/store/themeStore';
 
 // Import Vercel Analytics for web builds only
 let Analytics: any = null;
@@ -103,30 +106,41 @@ export default function RootLayout() {
   }
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <SafeAreaProvider>
-        <ThemeProvider value={customTheme}>
-          <AuthProvider>
-            <NotificationContainer>
-              <KeyboardAvoidingWrapper>
-                <Stack
-                  screenOptions={{
-                    headerShown: false,
-                    contentStyle: { backgroundColor: '#FFFAF0' },
-                  }}
-                >
-                  {/* File-based routes are automatically discovered */}
-                </Stack>
-              </KeyboardAvoidingWrapper>
-            </NotificationContainer>
-            <StatusBar style="dark" />
-            {/* Vercel Analytics - Web only */}
-            {Platform.OS === 'web' && Analytics && <Analytics />}
-            {Platform.OS === 'web' && SpeedInsights && <SpeedInsights />}
-          </AuthProvider>
-        </ThemeProvider>
-      </SafeAreaProvider>
-    </GestureHandlerRootView>
+    <ErrorBoundary
+      onError={(error, errorInfo) => {
+        if (__DEV__) {
+          console.error('App Error:', error);
+          console.error('Component Stack:', errorInfo.componentStack);
+        }
+      }}
+    >
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <SafeAreaProvider>
+          <AppThemeProvider>
+            <ThemeProvider value={customTheme}>
+              <AuthProvider>
+                <NotificationContainer>
+                  <KeyboardAvoidingWrapper>
+                    <Stack
+                      screenOptions={{
+                        headerShown: false,
+                        contentStyle: { backgroundColor: '#FFFAF0' },
+                      }}
+                    >
+                      {/* File-based routes are automatically discovered */}
+                    </Stack>
+                  </KeyboardAvoidingWrapper>
+                </NotificationContainer>
+                <StatusBar style="dark" />
+                {/* Vercel Analytics - Web only */}
+                {Platform.OS === 'web' && Analytics && <Analytics />}
+                {Platform.OS === 'web' && SpeedInsights && <SpeedInsights />}
+              </AuthProvider>
+            </ThemeProvider>
+          </AppThemeProvider>
+        </SafeAreaProvider>
+      </GestureHandlerRootView>
+    </ErrorBoundary>
   );
 }
 

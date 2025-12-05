@@ -10,7 +10,9 @@ export * from './Accordion';
 export * from './Header';
 export * from './Button';
 export * from './form/FormInput';
-
 export * from './form/FormSelect';
 export * from './form/FormTagGroup';
 export * from './form/FormToggle';
+
+export { default as ErrorBoundary } from './ErrorBoundary';
+export { default as RefreshableScrollView } from './RefreshableScrollView';

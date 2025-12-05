@@ -1,50 +1,63 @@
-import React, { createContext, useState, useEffect, ReactNode } from 'react';
-import { useColorScheme } from 'react-native';
-import { Theme, lightTheme, darkTheme } from '../theme';
+import * as React from 'react';
+import { createContext, useEffect, ReactNode } from 'react';
+import { Theme, lightTheme } from '../theme';
+import { useThemeStore } from '@/store/themeStore';
+
+type ThemeMode = 'light' | 'dark' | 'system';
 
 interface ThemeContextType {
     theme: Theme;
-    mode: 'light' | 'dark';
+    mode: ThemeMode;
+    resolvedMode: 'light' | 'dark';
     toggleTheme: () => void;
-    setMode: (mode: 'light' | 'dark') => void;
+    setMode: (mode: ThemeMode) => void;
+    isDarkMode: boolean;
 }
 
 export const ThemeContext = createContext<ThemeContextType>({
     theme: lightTheme,
     mode: 'light',
+    resolvedMode: 'light',
     toggleTheme: () => { },
     setMode: () => { },
+    isDarkMode: false,
 });
 
 interface ThemeProviderProps {
     children: ReactNode;
 }
 
-export const ThemeProvider = ({ children }: ThemeProviderProps) => {
-    const systemColorScheme = useColorScheme();
-    const [mode, setModeState] = useState<'light' | 'dark'>('light'); // Default to light for now
+export const AppThemeProvider = ({ children }: ThemeProviderProps) => {
+    const { 
+        theme, 
+        mode, 
+        resolvedMode, 
+        toggleTheme, 
+        setMode, 
+        initializeTheme,
+        isInitialized 
+    } = useThemeStore();
 
-    // Optional: Sync with system preference on mount if desired, 
-    // but for now we stick to manual control or default light as per request.
-    // useEffect(() => {
-    //   if (systemColorScheme) {
-    //     setModeState(systemColorScheme);
-    //   }
-    // }, [systemColorScheme]);
+    useEffect(() => {
+        if (!isInitialized) {
+            initializeTheme();
+        }
+    }, [isInitialized, initializeTheme]);
 
-    const toggleTheme = () => {
-        setModeState((prev) => (prev === 'light' ? 'dark' : 'light'));
+    const contextValue: ThemeContextType = {
+        theme,
+        mode,
+        resolvedMode,
+        toggleTheme,
+        setMode,
+        isDarkMode: resolvedMode === 'dark',
     };
-
-    const setMode = (newMode: 'light' | 'dark') => {
-        setModeState(newMode);
-    };
-
-    const theme = mode === 'light' ? lightTheme : darkTheme;
 
     return (
-        <ThemeContext.Provider value={{ theme, mode, toggleTheme, setMode }}>
+        <ThemeContext.Provider value={contextValue}>
             {children}
         </ThemeContext.Provider>
     );
 };
+
+export const ThemeProvider = AppThemeProvider;

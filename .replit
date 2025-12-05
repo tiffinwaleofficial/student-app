@@ -4,3 +4,42 @@ expertMode = true
 
 [nix]
 channel = "stable-25_05"
+
+[userenv]
+
+[userenv.shared]
+EXPO_PUBLIC_APP_ENV = "production"
+EXPO_PUBLIC_API_BASE_URL = "https://api-tiffin-wale.vercel.app"
+EXPO_PUBLIC_PROD_API_BASE_URL = "https://api-tiffin-wale.vercel.app"
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Start Expo Web"
+
+[[workflows.workflow]]
+name = "Start Expo Web"
+author = "agent"
+
+[workflows.workflow.metadata]
+outputType = "console"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "EXPO_NO_TELEMETRY=1 EXPO_NO_DOCTOR=1 bun exec expo start --web --clear"
+waitForPort = 8081
+
+[[ports]]
+localPort = 5000
+externalPort = 80
+
+[[ports]]
+localPort = 8081
+externalPort = 8081
