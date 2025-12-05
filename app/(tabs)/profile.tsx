@@ -76,9 +76,6 @@ export default function ProfileScreen() {
     }
   };
 
-  if (__DEV__) console.log('🔍 MyProfileScreen: Component rendered');
-  if (__DEV__) console.log('👤 MyProfileScreen: User state:', user);
-  if (__DEV__) console.log('🔔 MyProfileScreen: Current subscription:', currentSubscription);
 
   useEffect(() => {
     if (__DEV__) console.log('🔍 ProfileScreen: useEffect triggered');
@@ -92,16 +89,16 @@ export default function ProfileScreen() {
   }, [fetchCurrentSubscription]);
 
   const handleLogout = async () => {
-    console.log('🚪 MyProfileScreen: Starting logout process...');
+    if (__DEV__) console.log('🚪 MyProfileScreen: Starting logout process...');
     
     try {
       setIsLoggingOut(true);
-      console.log('🚪 MyProfileScreen: Calling logout API...');
+      if (__DEV__) console.log('🚪 MyProfileScreen: Calling logout API...');
       
       // Call logout API and clear local storage
       await logout();
       
-      console.log('✅ MyProfileScreen: Logout successful, redirecting to login...');
+      if (__DEV__) console.log('✅ MyProfileScreen: Logout successful, redirecting to login...');
       
       // Show success notification
       showNotification.success(t('loggedOutSuccessfully'));
@@ -110,13 +107,13 @@ export default function ProfileScreen() {
       router.replace('/(onboarding)/welcome');
       
     } catch (error) {
-      console.error('❌ MyProfileScreen: Logout error:', error);
+      if (__DEV__) console.error('❌ MyProfileScreen: Logout error:', error);
       
       // Show error notification but still redirect
       showNotification.error(t('logoutFailed'));
       
       // Even if API fails, clear local data and redirect
-      console.log('🚪 MyProfileScreen: API failed, but clearing local data and redirecting...');
+      if (__DEV__) console.log('🚪 MyProfileScreen: API failed, but clearing local data and redirecting...');
       router.replace('/(onboarding)/welcome');
     } finally {
       setIsLoggingOut(false);
@@ -169,15 +166,12 @@ export default function ProfileScreen() {
   };
 
   if (!user) {
-    console.log('⚠️ MyProfileScreen: No user found, showing loading');
     return (
       <View style={styles.loadingContainer}>
         <Text style={styles.loadingText}>{t('loadingProfile')}</Text>
       </View>
     );
   }
-
-  console.log('✅ MyProfileScreen: Rendering profile content');
 
   return (
     <SafeAreaView style={styles.container}>
@@ -428,12 +422,7 @@ export default function ProfileScreen() {
           <Animated.View entering={FadeInDown.delay(500).duration(400)} style={styles.logoutSection}>
             <TouchableOpacity 
               style={[styles.logoutButton, isLoggingOut && styles.logoutButtonDisabled]} 
-              onPress={() => {
-                console.log('🚪 MyProfileScreen: Logout button pressed');
-                console.log('🚪 MyProfileScreen: Button disabled state:', isLoggingOut);
-                
-                handleLogout();
-              }}
+              onPress={handleLogout}
               disabled={isLoggingOut}
               activeOpacity={0.7}
             >

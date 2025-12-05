@@ -131,7 +131,7 @@ export default function HomeScreen() {
           fetchTodayMeals(true),
           fetchUpcomingMeals(true),
           fetchNotifications(userId, false),
-        ]).catch(err => console.error('Focus refresh error:', err));
+        ]).catch(err => { if (__DEV__) console.error('Focus refresh error:', err); });
       }, 300); // Small delay to avoid duplicate calls
 
       return () => clearTimeout(timer);
@@ -142,14 +142,14 @@ export default function HomeScreen() {
   const onRefresh = async () => {
     const userId = user?.id || user?.id;
     if (!isInitialized || authLoading || !userId) {
-      console.log('⚠️ Dashboard: Cannot refresh - auth not ready');
+      if (__DEV__) console.log('⚠️ Dashboard: Cannot refresh - auth not ready');
       setRefreshing(false);
       return;
     }
 
     setRefreshing(true);
     try {
-      console.log('🔄 Dashboard: Manual refresh triggered');
+      if (__DEV__) console.log('🔄 Dashboard: Manual refresh triggered');
       await Promise.all([
         fetchTodayMeals(true), // Force refresh meals
         fetchUpcomingMeals(true), // Force refresh upcoming meals
@@ -157,9 +157,9 @@ export default function HomeScreen() {
         fetchRestaurants(), // Fetch restaurants
         fetchNotifications(userId, true), // Force refresh notifications
       ]);
-      console.log('✅ Dashboard: Manual refresh completed');
+      if (__DEV__) console.log('✅ Dashboard: Manual refresh completed');
     } catch (error) {
-      console.error('❌ Dashboard: Error refreshing data:', error);
+      if (__DEV__) console.error('❌ Dashboard: Error refreshing data:', error);
     } finally {
       setRefreshing(false);
     }
@@ -249,24 +249,14 @@ export default function HomeScreen() {
         {/* Subscription Status */}
         <Animated.View entering={FadeInDown.delay(100).duration(400)}>
           {currentSubscription ? (
-            <>
-              {console.log('🔍 Dashboard: Rendering ActiveSubscriptionDashboard with subscription:', {
-                id: currentSubscription.id,
-                status: currentSubscription.status,
-                planName: currentSubscription.plan?.name
-              })}
-              <ActiveSubscriptionDashboard
-                user={user}
-                todayMeals={todayMeals}
-                upcomingMeals={upcomingMeals || []}
-                isLoading={mealsLoading && todayMeals.length === 0}
-              />
-            </>
+            <ActiveSubscriptionDashboard
+              user={user}
+              todayMeals={todayMeals}
+              upcomingMeals={upcomingMeals || []}
+              isLoading={mealsLoading && todayMeals.length === 0}
+            />
           ) : (
-            <>
-              {console.log('🔍 Dashboard: Rendering NoSubscriptionDashboard - no current subscription found')}
-              <NoSubscriptionDashboard />
-            </>
+            <NoSubscriptionDashboard />
           )}
         </Animated.View>
 
