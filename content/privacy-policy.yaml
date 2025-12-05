@@ -1,0 +1,72 @@
+title: Privacy Policy
+lastUpdated: "2025-10-11"
+sections:
+  - id: information-collection
+    title: "1. Information We Collect"
+    content: "We collect information you provide directly to us, such as when you create an account, place an order, or contact us for support. This may include:"
+    bullets:
+      - "Name, email address, and phone number"
+      - "Delivery addresses and preferences"
+      - "Payment information (processed securely)"
+      - "Order history and meal preferences"
+
+  - id: information-usage
+    title: "2. How We Use Your Information"
+    content: "We use the information we collect to:"
+    bullets:
+      - "Process and fulfill your orders"
+      - "Provide customer support"
+      - "Send you important updates about your orders"
+      - "Improve our services and user experience"
+      - "Comply with legal obligations"
+
+  - id: information-sharing
+    title: "3. Information Sharing"
+    content: "We do not sell, trade, or otherwise transfer your personal information to third parties without your consent, except:"
+    bullets:
+      - "To our delivery partners for order fulfillment"
+      - "To payment processors for transaction processing"
+      - "When required by law or to protect our rights"
+
+  - id: data-security
+    title: "4. Data Security"
+    content: "We implement appropriate security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. This includes:"
+    bullets:
+      - "Encryption of sensitive data"
+      - "Secure payment processing"
+      - "Regular security audits"
+      - "Limited access to personal information"
+
+  - id: user-rights
+    title: "5. Your Rights"
+    content: "You have the right to:"
+    bullets:
+      - "Access your personal information"
+      - "Correct inaccurate information"
+      - "Delete your account and data"
+      - "Opt-out of marketing communications"
+      - "Withdraw consent for data processing"
+
+  - id: cookies-tracking
+    title: "6. Cookies and Tracking"
+    content: "We use cookies and similar technologies to enhance your experience, analyze usage patterns, and provide personalized content. You can control cookie settings through your browser."
+
+  - id: third-party-services
+    title: "7. Third-Party Services"
+    content: "Our app may contain links to third-party websites or services. We are not responsible for the privacy practices of these external sites. We encourage you to review their privacy policies."
+
+  - id: children-privacy
+    title: "8. Children's Privacy"
+    content: "Our services are not intended for children under 13 years of age. We do not knowingly collect personal information from children under 13."
+
+  - id: policy-changes
+    title: "9. Changes to This Policy"
+    content: "We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the \"Last updated\" date."
+
+  - id: contact
+    title: "10. Contact Us"
+    content: "If you have any questions about this Privacy Policy, please contact us at:"
+    contact:
+      - "Email: privacy@tiffinwale.com"
+      - "Phone: +91 98765 43210"
+      - "Address: TiffinWale Pvt Ltd, Mumbai, India"

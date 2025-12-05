@@ -1,0 +1,79 @@
+runtime: nodejs20
+service: app
+
+instance_class: F2
+
+# Add this entrypoint to serve the build
+entrypoint: npx serve -s web-build
+
+env_variables:
+  NODE_ENV: "production"
+  PORT: "8080"
+  EXPO_PUBLIC_API_URL: "https://tiffin-wale.de.r.appspot.com/api"
+
+# Setup to ensure proper scaling
+automatic_scaling:
+  min_instances: 0
+  max_instances: 5
+
+# Configure handlers for static files
+handlers:
+  # Serve favicon files
+  - url: /favicon.ico
+    static_files: web-build/favicon.ico
+    upload: web-build/favicon.ico
+    secure: always
+    http_headers:
+      Cache-Control: public, max-age=31536000, immutable
+      X-Content-Type-Options: nosniff
+  
+  - url: /favicon.png
+    static_files: web-build/favicon.png
+    upload: web-build/favicon.png
+    secure: always
+    http_headers:
+      Cache-Control: public, max-age=31536000, immutable
+      X-Content-Type-Options: nosniff
+
+  # Serve custom CSS file
+  - url: /custom-fonts.css
+    static_files: web-build/custom-fonts.css
+    upload: web-build/custom-fonts.css
+    secure: always
+    http_headers:
+      Cache-Control: public, max-age=31536000, immutable
+      X-Content-Type-Options: nosniff
+      Content-Type: text/css
+
+  # Serve _expo assets (includes fonts)
+  - url: /_expo/(.*)
+    static_files: web-build/_expo/\1
+    upload: web-build/_expo/(.*)
+    secure: always
+    http_headers:
+      Cache-Control: public, max-age=31536000, immutable
+      X-Content-Type-Options: nosniff
+
+  # Serve static assets in static directory
+  - url: /static/(.*)
+    static_files: web-build/static/\1
+    upload: web-build/static/(.*)
+    secure: always
+    http_headers:
+      Cache-Control: public, max-age=31536000, immutable
+      X-Content-Type-Options: nosniff
+
+  # Serve other static files
+  - url: /(.*\.(json|ico|js|css|png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot))$
+    static_files: web-build/\1
+    upload: web-build/.*\.(json|ico|js|css|png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)$
+    secure: always
+    http_headers:
+      Cache-Control: public, max-age=31536000, immutable
+      X-Content-Type-Options: nosniff
+
+  # Handle all other routes by serving index.html (SPA pattern)
+  - url: /.*
+    static_files: web-build/index.html
+    upload: web-build/index.html
+    secure: always 

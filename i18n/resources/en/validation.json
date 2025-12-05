@@ -1,0 +1,9 @@
+{
+  "enterPassword": "Enter a password",
+  "veryWeak": "Very weak",
+  "weak": "Weak",
+  "fair": "Fair",
+  "strong": "Strong",
+  "veryStrong": "Very strong",
+  "invalid": "Invalid"
+}

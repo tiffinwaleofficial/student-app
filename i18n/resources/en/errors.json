@@ -1,0 +1,16 @@
+{
+  "invalidRequest": "Invalid request. Please check your input.",
+  "authenticationFailed": "Authentication failed. Please login again.",
+  "noPermission": "You do not have permission to perform this action.",
+  "resourceNotFound": "The requested resource was not found.",
+  "conflictOccurred": "A conflict occurred. This resource may already exist.",
+  "validationFailed": "Validation failed. Please check your input.",
+  "tooManyRequests": "Too many requests. Please try again later.",
+  "serverError": "Server error. Please try again later.",
+  "serviceUnavailable": "Service temporarily unavailable. Please try again later.",
+  "unexpectedError": "An unexpected error occurred.",
+  "networkError": "Unable to connect to server. Please check your internet connection and ensure the backend server is running.",
+  "timeoutError": "Request timed out. Please try again.",
+  "connectionRefused": "Connection refused. Please ensure the backend server is running on the correct port.",
+  "serverNotFound": "Server not found. Please check the server address."
+}

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>TiffinWale - Delicious meals for bachelors</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <!-- Add Google Fonts as a fallback -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Add our custom CSS file -->
+    <link href="/custom-fonts.css" rel="stylesheet">
+    <style>
+      html, body, #root {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        background-color: #FFFAF0;
+      }
+      
+      /* Font preloading with Google Fonts fallback */
+      @font-face {
+        font-family: 'Poppins-Regular';
+        src: url('/_expo/static/fonts/Poppins_400Regular.093ee89be9ede30383f39a899c485a82.ttf') format('truetype'),
+             url('https://fonts.gstatic.com/s/poppins/v20/pxiEyp8kv8JHgFVrJJfecg.woff2') format('woff2');
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: 'Poppins-Medium';
+        src: url('/_expo/static/fonts/Poppins_500Medium.bf59c687bc6d3a70204d3944082c5cc0.ttf') format('truetype'),
+             url('https://fonts.gstatic.com/s/poppins/v20/pxiByp8kv8JHgFVrLGT9Z1xlFQ.woff2') format('woff2');
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: 'Poppins-SemiBold';
+        src: url('/_expo/static/fonts/Poppins_600SemiBold.6f1520d107205975713ba09df778f93f.ttf') format('truetype'),
+             url('https://fonts.gstatic.com/s/poppins/v20/pxiByp8kv8JHgFVrLEj6Z1xlFQ.woff2') format('woff2');
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: 'Poppins-Bold';
+        src: url('/_expo/static/fonts/Poppins_700Bold.08c20a487911694291bd8c5de41315ad.ttf') format('truetype'),
+             url('https://fonts.gstatic.com/s/poppins/v20/pxiByp8kv8JHgFVrLCz7Z1xlFQ.woff2') format('woff2');
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      /* Apply fonts directly to elements */
+      body {
+        font-family: 'Poppins', 'Poppins-Regular', sans-serif;
+      }
+      
+      h1, h2, h3, h4, h5, h6, strong, b {
+        font-family: 'Poppins', 'Poppins-Bold', sans-serif;
+      }
+      
+      /* Custom loader */
+      .expo-loading {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        background-color: #FFFAF0;
+      }
+      .expo-loading-logo {
+        font-family: 'Poppins', 'Poppins-Bold', sans-serif;
+        font-size: 36px;
+        color: #FF9B42;
+        margin-bottom: 16px;
+      }
+      .expo-loading-spinner {
+        width: 50px;
+        height: 50px;
+        border: 5px solid rgba(255, 155, 66, 0.2);
+        border-top-color: #FF9B42;
+        border-radius: 50%;
+        animation: expo-loading-spinner 1s linear infinite;
+      }
+      @keyframes expo-loading-spinner {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Hide reCAPTCHA badge and container */
+      .grecaptcha-badge { 
+        visibility: hidden;
+        opacity: 0;
+        pointer-events: none;
+      }
+      #recaptcha-container {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <div class="expo-loading">
+        <div class="expo-loading-logo">TiffinWale</div>
+        <div class="expo-loading-spinner"></div>
+      </div>
+    </div>
+    <!-- reCAPTCHA container for Firebase phone auth -->
+    <div id="recaptcha-container"></div>
+  </body>
+</html> 

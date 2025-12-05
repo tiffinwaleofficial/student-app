@@ -1,0 +1,45 @@
+# dependencies
+node_modules/
+
+# expo
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+
+# native
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# metro
+.metro-health-check*
+
+# debug
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# macos
+.DS_Store
+*.pem
+
+# local env files
+.env*.local
+
+# typescript
+*.tsbuildinfo
+.vercel
+
+# Android build outputs (keep gradle cache for faster builds)
+# Only exclude the final APK/AAB files, not the cache
+*.apk
+*.aab
+android/app/build/outputs/**/*.apk
+android/app/build/outputs/**/*.aab
+android/app/build/outputs/bundle/
+android/app/build/outputs/mapping/
+android/app/build/outputs/logs/

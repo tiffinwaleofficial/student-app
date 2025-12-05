@@ -1,0 +1,45 @@
+categories:
+  - id: subscription
+    title: Subscription
+    questions:
+      - q: "How does the subscription work?"
+        a: "Our subscription service provides daily meals delivered to your doorstep. Choose from our Basic, Premium, or Family plans, each offering different meal frequencies and customization options. You can pause, modify, or cancel your subscription anytime."
+      
+      - q: "How do I pause my subscription?"
+        a: "You can easily pause your subscription through the app. Go to your subscription settings and select \"Pause Subscription.\" You can pause for up to 30 days at a time."
+
+  - id: delivery
+    title: Delivery
+    questions:
+      - q: "What are the delivery timings?"
+        a: "We deliver meals according to standard meal times: Breakfast (7:30 AM - 9:00 AM), Lunch (12:00 PM - 1:30 PM), and Dinner (7:00 PM - 8:30 PM). You can customize your preferred delivery time slots within these windows."
+      
+      - q: "Do you deliver on weekends?"
+        a: "Yes, we offer weekend delivery with all our subscription plans. You can choose to opt-out of weekend delivery if preferred."
+
+  - id: customization
+    title: Customization
+    questions:
+      - q: "Can I customize my meals?"
+        a: "Yes! Premium and Family plan subscribers can customize their meals based on dietary preferences, allergies, and taste preferences. Basic plan users receive our standard menu rotation."
+      
+      - q: "What about food allergies?"
+        a: "We take allergies very seriously. You can specify your allergies in your profile, and our system will ensure you never receive meals containing those ingredients."
+
+  - id: quality
+    title: Quality & Packaging
+    questions:
+      - q: "What if I'm not satisfied with a meal?"
+        a: "Your satisfaction is our priority. If you're not happy with a meal, please rate and provide feedback in the app. We'll review your feedback and may offer compensation or replacement meals."
+      
+      - q: "How is the food packaged?"
+        a: "We use high-quality, food-grade containers that are microwave-safe and environmentally friendly. All packaging is sealed to maintain freshness and hygiene."
+
+  - id: additional
+    title: Additional Services
+    questions:
+      - q: "Can I order extra items?"
+        a: "Yes! Besides your regular subscription meals, you can order additional items like desserts, beverages, or extra portions through the app."
+      
+      - q: "How do I contact customer support?"
+        a: "You can reach our customer support team through the app's help section, email at support@tiffinwale.com, or call us at 1800-123-4567 during business hours."

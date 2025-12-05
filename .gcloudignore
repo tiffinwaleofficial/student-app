@@ -1,0 +1,30 @@
+# Node.js dependencies
+node_modules/
+
+# Git files
+.git/
+.gitignore
+
+# Development files
+.eslintrc.js
+.prettierrc
+.expo/
+*.log
+*.lock
+.env.local
+.env.development
+.env.test
+
+# Source files (we only need the built files)
+app/
+components/
+assets/
+types/
+hooks/
+store/
+utils/
+
+# Keep configuration files
+!app.json
+!package.json
+!app.yaml 

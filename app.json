@@ -1,0 +1,41 @@
+{
+  "expo": {
+    "name": "TiffinWale",
+    "slug": "tiffinwale-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "tiffinwale",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "single",
+      "favicon": "./assets/images/favicon.png",
+      "name": "TiffinWale - Food Delivery",
+      "shortName": "TiffinWale",
+      "description": "TiffinWale - Delicious meals for bachelors",
+      "lang": "en",
+      "scope": "/",
+      "themeColor": "#FF9B42",
+      "backgroundColor": "#FFFAF0"
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "android": {
+      "package": "com.tiffinwale_official.tiffinwalemobile",
+      "softwareKeyboardLayoutMode": "pan",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#FF9B42"
+      }
+    }
+  }
+}

@@ -1,0 +1,62 @@
+{
+  // ============================================
+  // DISABLE JAVA EXTENSION & GRADLE AUTO-LOADING
+  // ============================================
+  
+  // Completely disable Java extension for this workspace
+  "java.enabled": false,
+  
+  // Disable all Gradle import features
+  "java.import.gradle.enabled": false,
+  "java.import.gradle.wrapper.enabled": false,
+  "java.import.gradle.offline.enabled": false,
+  "java.import.gradle.java.home": null,
+  "java.import.gradle.version": null,
+  "java.import.gradle.home": null,
+  
+  // Disable automatic build configuration updates
+  "java.configuration.updateBuildConfiguration": "disabled",
+  "java.autobuild.enabled": false,
+  
+  // Exclude Android folder from Java project detection
+  "java.project.exclusions": [
+    "**/android/**",
+    "**/android",
+    "**/android/**/*",
+    "android/**"
+  ],
+  
+  // Exclude Android/Gradle files from file watcher and search
+  "files.exclude": {
+    "**/android/.gradle": true,
+    "**/android/.gradle/**": true,
+    "**/android/build": true,
+    "**/android/build/**": true,
+    "**/android/app/build": true,
+    "**/android/app/.cxx": true,
+    "**/android/.idea": true,
+    "**/android/local.properties": true
+  },
+  
+  "files.watcherExclude": {
+    "**/android/**": true,
+    "**/.gradle/**": true
+  },
+  
+  "search.exclude": {
+    "**/android": true,
+    "**/android/**": true,
+    "**/.gradle": true,
+    "**/.gradle/**": true
+  },
+  
+  // Prevent Java extension from auto-starting
+  "java.server.launchMode": "Never",
+  
+  // Additional Java extension settings to prevent loading
+  "java.compile.nullAnalysis.mode": "disabled",
+  "java.configuration.runtimes": [],
+  "java.jdt.ls.java.home": null
+}
+
+
